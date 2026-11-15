@@ -57,8 +57,8 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
     <div class="student-list" id="earth-list"></div>
   </article>
   <article class="panel culture" style="--accent:#8ee7ce;--fallback:#184961">
-    <div class="hero"><div class="museum-scene" aria-hidden="true"><span>🏺</span><span>🌏</span><span>🎭</span></div><div class="hero-label"><div class="kicker">WORLD CULTURES</div><h2>世界の文化</h2></div></div>
-    <div class="description">国立民族学博物館の展示から、世界の文化を紹介します。</div>
+    <div class="hero"><div class="museum-scene" aria-hidden="true"><span>🏺</span><span>🌏</span><span>🎭</span></div><div class="hero-label"><div class="kicker">ASIAN CULTURES</div><h2>アジアの文化</h2></div></div>
+    <div class="description">アジアの文化を紹介します。</div>
     <div class="student-list" id="culture-list"></div>
   </article>
   <article class="panel history" style="--accent:#ffcc75;--fallback:#473e4c">
@@ -76,7 +76,7 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 <script>
 'use strict';
 const students=[{id:'u',name:'于'},{id:'ochi',name:'越智'},{id:'sumida',name:'住田'},{id:'tahara',name:'田原'},{id:'yamamoto',name:'山本'}];
-const themes={history:{label:'いろいろなものの歴史',ext:()=>'.pdf'},culture:{label:'世界の文化',ext:id=>(id==='sumida'||id==='tahara')?'.mp4':'.pdf'},earth:{label:'Google EarthでGO!',ext:()=>'.mp4'}};
+const themes={history:{label:'いろいろなものの歴史',ext:()=>'.pdf'},culture:{label:'アジアの文化',ext:id=>(id==='sumida'||id==='tahara')?'.mp4':'.pdf'},earth:{label:'Google EarthでGO!',ext:()=>'.mp4'}};
 // GitHubにアップロードされた実際の名前に合わせています（住田さんの歴史のみ smida_history.pdf）。
 const fileFor=(id,theme)=>theme==='history'&&id==='sumida'?'smida_history.pdf':id+'_'+theme+themes[theme].ext(id);
 const viewer=document.querySelector('#viewer'),stage=document.querySelector('#stage'),heading=document.querySelector('#viewtitle'),home=document.querySelector('#home');
