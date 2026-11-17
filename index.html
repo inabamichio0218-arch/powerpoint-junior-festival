@@ -75,9 +75,9 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 </section>
 <script>
 'use strict';
-const students=[{id:'u',name:'于'},{id:'ochi',name:'越智'},{id:'sumida',name:'住田'},{id:'tahara',name:'田原'},{id:'yamamoto',name:'山本'}];
+const students=[{id:'u',name:'A'},{id:'ochi',name:'B'},{id:'sumida',name:'C'},{id:'tahara',name:'D'},{id:'yamamoto',name:'E'}];
 const themes={history:{label:'いろいろなものの歴史',ext:()=>'.pdf'},culture:{label:'アジアの文化',ext:id=>(id==='sumida'||id==='tahara')?'.mp4':'.pdf'},earth:{label:'Google EarthでGO!',ext:()=>'.mp4'}};
-// GitHubにアップロードされた実際の名前に合わせています（住田さんの歴史のみ smida_history.pdf）。
+// GitHubにアップロードされた実際の名前に合わせています（歴史作品1件のみ smida_history.pdf）。
 const fileFor=(id,theme)=>theme==='history'&&id==='sumida'?'smida_history.pdf':id+'_'+theme+themes[theme].ext(id);
 const viewer=document.querySelector('#viewer'),stage=document.querySelector('#stage'),heading=document.querySelector('#viewtitle'),home=document.querySelector('#home');
 let opener=null;
