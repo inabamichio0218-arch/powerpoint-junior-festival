@@ -89,6 +89,82 @@ body{background:radial-gradient(ellipse at 50% -5%,#344ea6 0%,#142b67 28%,#0c1b4
     gap: clamp(20px, 2.2vw, 45px);
   }
 }
+
+/* 中学部・文化祭用モーション：展示機能に干渉しない、CSSだけの演出 */
+#home{isolation:isolate}
+#home .top .eyebrow{animation:festivalEyebrow 4.8s ease-in-out infinite}
+#home .top h1{animation:festivalGold 5.5s ease-in-out infinite}
+#home .top h1::before,#home .top h1::after{animation:festivalStar 3.3s ease-in-out infinite}
+#home .top h1::after{animation-delay:-1.65s}
+#home .panel{animation:festivalPanel 12s ease-in-out infinite;will-change:box-shadow}
+#home .panel.earth{--festival-delay:0s;animation-delay:0s}
+#home .panel.culture{--festival-delay:-4s;animation-delay:-4s}
+#home .panel.history{--festival-delay:-8s;animation-delay:-8s}
+#home .panel::before{background:linear-gradient(95deg,transparent 0%,var(--accent) 22%,#fff8d9 42%,var(--accent) 62%,transparent 100%);background-size:240% 100%;animation:festivalBorder 6s linear infinite}
+#home .panel.culture::before{animation-delay:-2s}
+#home .panel.history::before{animation-delay:-4s}
+/* 画像は固定のまま微妙なズームと視点移動。文字とボタンは動かさない。 */
+#home .hero::before{animation:festivalScene 13s ease-in-out infinite alternate;transform-origin:50% 50%}
+#home .panel.culture .hero::before{animation-duration:16s;animation-delay:-4s}
+#home .panel.history .hero::before{animation-duration:14s;animation-delay:-7s}
+/* イラストの上を幅広の光の帯が通り抜ける */
+#home .hero::after{
+  background:
+    linear-gradient(110deg,transparent 13%,rgba(255,255,255,0) 35%,rgba(214,246,255,.22) 48%,rgba(255,255,255,.12) 52%,transparent 65%),
+    linear-gradient(180deg,rgba(3,10,38,.02) 0%,rgba(6,15,45,.07) 34%,rgba(3,9,30,.72) 68%,rgba(3,8,29,.95) 100%);
+  background-size:240% 100%,100% 100%;
+  background-position:180% 0,center;
+  animation:festivalSweep 8s ease-in-out infinite;
+}
+#home .panel.culture .hero::after{animation-delay:-2.7s}
+#home .panel.history .hero::after{animation-delay:-5.3s}
+/* 説明文字・クリック領域に触れない星の光 */
+#home .hero-label{position:relative;z-index:1}
+#home .hero-label::after{
+  content:"✦";position:absolute;right:8%;top:-34%;
+  color:#fffbd0;font-size:clamp(14px,1.7vw,29px);
+  text-shadow:0 0 6px #fff,0 0 16px #ffeb96,0 0 30px var(--accent);
+  pointer-events:none;animation:festivalGlint 4.6s ease-in-out infinite;
+}
+#home .panel.culture .hero-label::after{animation-delay:-1.8s}
+#home .panel.history .hero-label::after{animation-delay:-3.1s}
+/* A〜Eの再生ボタン：位置を変えずに光る */
+#home .student .arrow{
+  animation:festivalPlay 5s ease-in-out infinite;
+  animation-delay:calc((var(--festival-delay,0s)) + (var(--row-delay,0s)));
+}
+#home .student:nth-child(1){--row-delay:0s}
+#home .student:nth-child(2){--row-delay:-1s}
+#home .student:nth-child(3){--row-delay:-2s}
+#home .student:nth-child(4){--row-delay:-3s}
+#home .student:nth-child(5){--row-delay:-4s}
+#home .student:hover .arrow,#home .student:focus-visible .arrow{
+  animation:none;box-shadow:0 0 18px 4px var(--accent),0 0 42px 10px color-mix(in srgb,var(--accent) 55%,transparent);
+  filter:brightness(1.35);
+}
+#home .student:active{filter:brightness(1.3)}
+@keyframes festivalEyebrow{0%,100%{text-shadow:0 0 7px #73d8ff8c}50%{text-shadow:0 0 22px #8cdeff,0 0 42px #3c8fff}}
+@keyframes festivalGold{0%,100%{filter:drop-shadow(0 4px 0 #873b2a) drop-shadow(0 6px 14px #000b) drop-shadow(0 0 15px #ffe26988)}
+ 50%{filter:drop-shadow(0 4px 0 #873b2a) drop-shadow(0 6px 14px #000b) drop-shadow(0 0 34px #ffdd8ee6)}}
+@keyframes festivalStar{0%,100%{opacity:.5;transform:scale(.75) rotate(-18deg)}45%{opacity:1;transform:scale(1.28) rotate(24deg)}}
+@keyframes festivalPanel{
+  0%,21%,40%,100%{box-shadow:0 7px 0 color-mix(in srgb,var(--accent) 32%,#142451),0 17px 40px #0008,0 0 22px color-mix(in srgb,var(--accent) 33%,transparent)}
+  10%{box-shadow:0 7px 0 color-mix(in srgb,var(--accent) 42%,#142451),0 17px 40px #0008,0 0 36px 10px color-mix(in srgb,var(--accent) 62%,transparent),0 0 75px 17px color-mix(in srgb,var(--accent) 27%,transparent)}
+}
+@keyframes festivalBorder{0%{background-position:180% 0}100%{background-position:-70% 0}}
+@keyframes festivalScene{0%{transform:scale(1.015) translateX(-.4%)}100%{transform:scale(1.105) translateX(.5%)}}
+@keyframes festivalSweep{0%,15%{background-position:180% 0,center}48%,100%{background-position:-105% 0,center}}
+@keyframes festivalGlint{0%,100%{opacity:.3;transform:scale(.6) rotate(-20deg)}48%{opacity:1;transform:scale(1.35) rotate(24deg)}}
+@keyframes festivalPlay{
+  0%,15%,38%,100%{box-shadow:0 0 10px color-mix(in srgb,var(--accent) 70%,transparent);filter:brightness(1)}
+  24%{box-shadow:0 0 17px 5px var(--accent),0 0 34px 10px color-mix(in srgb,var(--accent) 65%,transparent);filter:brightness(1.3)}
+}
+@media(prefers-reduced-motion:reduce){
+  #home .top .eyebrow,#home .top h1,#home .top h1::before,#home .top h1::after,
+  #home .panel,#home .panel::before,#home .hero::before,#home .hero::after,
+  #home .hero-label::after,#home .student .arrow{animation:none!important}
+}
+
 </style>
 </head>
 <body>
