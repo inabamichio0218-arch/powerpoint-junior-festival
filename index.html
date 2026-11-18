@@ -76,6 +76,19 @@ body{background:radial-gradient(ellipse at 50% -5%,#344ea6 0%,#142b67 28%,#0c1b4
 .footer{color:#dce8ff;font-size:clamp(11px,.96vw,17px)}
 @media(max-width:800px){.top h1{font-size:clamp(27px,5.2vw,53px)}.hero{height:170px}.description{min-height:0}.student{font-size:clamp(16px,2.7vw,24px)}}
 @media(max-width:520px){.top h1{font-size:clamp(25px,6vw,36px)}.top h1::before,.top h1::after{font-size:16px}.hero{height:165px}}
+
+/* 全画面モニター向け：左右の空きを減らし、３テーマの間隔を広げる */
+@media (min-width: 801px) {
+  .shell {
+    width: 100%;
+    max-width: 2400px;
+    padding-left: clamp(14px, 1.5vw, 30px);
+    padding-right: clamp(14px, 1.5vw, 30px);
+  }
+  .columns {
+    gap: clamp(20px, 2.2vw, 45px);
+  }
+}
 </style>
 </head>
 <body>
