@@ -296,6 +296,28 @@ async function showPdf(src,personName){
  }
  const turn=(n)=>{if(!pdf||rendering)return;pageNum=Math.max(1,Math.min(pdf.numPages,pageNum+n));draw()};
  prev.addEventListener('click',()=>turn(-1));next.addEventListener('click',()=>turn(1));fit.addEventListener('click',()=>{if(pdf&&!rendering)draw()});
+ // ホイールで1ページずつ移動。タッチパッドの慣性・連続イベントはまとめて扱う。
+ // ボタン操作は従来どおり。ページ描画中の連続移動は受け付けない。
+ let wheelSum=0,lastWheelAt=0,lastTurnAt=0,lastWheelDirection=0;
+ wrap.addEventListener('wheel',e=>{
+  if(session!==pdfSession||!pdf)return;
+  // Ctrl+ホイールはブラウザの拡大縮小操作として残す。
+  if(e.ctrlKey||e.metaKey)return;
+  e.preventDefault();
+  const now=performance.now();
+  // 機種依存の行・ページ単位をピクセル相当に換算。
+  const amount=e.deltaY*(e.deltaMode===1?18:e.deltaMode===2?360:1);
+  if(Math.abs(amount)<.1)return;
+  const direction=Math.sign(amount);
+  if(now-lastWheelAt>260||lastWheelDirection!==direction)wheelSum=0;
+  lastWheelAt=now;lastWheelDirection=direction;
+  if(rendering||now-lastTurnAt<680){wheelSum=0;return;}
+  wheelSum+=amount;
+  if(Math.abs(wheelSum)<55)return;
+  wheelSum=0;
+  const target=Math.max(1,Math.min(pdf.numPages,pageNum+direction));
+  if(target!==pageNum){lastTurnAt=now;turn(direction);}
+ },{passive:false});
  try{
   pdfTask=lib.getDocument({url:src,disableAutoFetch:false});
   pdfTask.onProgress=(p)=>{if(session===pdfSession&&p.total){status.textContent='作品を読み込んでいます… '+Math.min(99,Math.round(p.loaded/p.total*100))+'%';}};
